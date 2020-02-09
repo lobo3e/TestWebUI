@@ -1,0 +1,103 @@
+﻿@model IEnumerable<User>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+<h1>List Sample</h1>
+@foreach (var item in Model)
+{
+    <div>
+        <div id="@item.ID" class="card border-primary mb-3" draggable="true" ondragstart="drag(event)" style="max-width: 20rem;">
+            <div class="card-header">@item.Name</div>
+            <div class="card-body">
+                <p class="card-text">@item.Surname</p>
+            </div>
+            <div class="card-footer">
+                <p class="card-text">@item.Number</p>
+            </div>
+        </div>
+    </div>
+}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+      <style type="text/css">
+        #div1 {
+            width: 275px;
+            height: 220px;
+            padding: 10px;
+            border: 1px solid #aaaaaa;
+        }
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 2s linear;
+}
+
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 5s, opacity 5s linear;
+}
+    </style>
+    <script>
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+    function drop(ev) {
+            ev.preventDefault();
+             var data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
+        
+            $.get("/Values/Details/777" + data); /*, function (data) { alert(data); });*/
+
+            @*window.location = "/Values/Details/" + @Model.ElementAt(1).ID*@ @*'@Url.Action("Details", "Values", Model.ElementAt(0).ID, "http")';*@
+
+        }
+
+        function drop1(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
+
+            document.getElementById(data).classList.add('hidden');
+
+            $.get("/Values/Details/rrr" + data + "test2");/*, function (data) { alert(data); });*/
+
+        }
+
+    </script>
+</head>
+<body>
+
+    <p>Drag the IMAGE into the rectangle:</p>
+
+    <div id="div1" ondrop="drop1ww(event)" ondragover="allowDrop(event)"></div>
+    <br>
+
+    <img id="drag1" src="..\doggie.png" draggable="true" ondragstart="drag(event)" width="246" height="205">
+
+    <p>Drag a CARD into the rectangle:</p>
+  
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <br>
+
+    <img id="drag2" src="..\doggie.png" draggable="true" ondragstart="drag(event)" width="246" height="205">
+
+</body>
+</html>
+
