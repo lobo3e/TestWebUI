@@ -28,7 +28,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-      <style type="text/css">
+    <style type="text/css">
         #div1 {
             width: 275px;
             height: 220px;
@@ -36,18 +36,158 @@
             border: 1px solid #aaaaaa;
         }
 
-.visible {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 2s linear;
-}
+        .visible {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 2s linear;
+        }
 
 
-.hidden {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s 5s, opacity 5s linear;
-}
+        .hidden {
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s 1s, opacity 1s linear;
+        }
+
+        .btn-circle.btn-sm {
+            width: 40px;
+            height: 20px;
+            padding: 0px 0px;
+            border-radius: 155px;
+            font-size: 15px;
+            text-align: center;
+        }
+        
+        .btn-circle.btn-md {
+            width: 90px;
+            height: 90px;
+            padding: 6px 0px;
+            border-radius: 95px;
+            font-size: 21px;
+            text-align: center;
+        }
+
+        .outer-border {
+            border: 2px solid black;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content {
+            position: relative;
+        }
+
+        .btn-circle.btn-lg {
+            width: 350px;
+            height: 100px;
+            padding: 0px 0px;
+            border-radius: 55px;
+            font-size: 21px;
+            text-align: center;
+        }
+
+        .spot1-sm {
+            position: absolute;
+            transform: translate(25px, 0px);
+        }
+        .spot1 {
+            position: absolute;
+            transform: translate(0px, 10px);
+        }
+
+        .spot2 {
+            position: absolute;
+            transform: translate(200px, 70px);
+        }
+
+        .spot3 {
+            position: absolute;
+            transform: translate(50px, 300px);
+        }
+
+        .spot4 {
+            position: absolute;
+            transform: translate(200px, 310px);
+        }
+
+        .center-list {
+            position: absolute;
+            transform: translate(0px, 200px);
+        }
+
+        #section1 {
+            padding-top: 0px;
+            height: 100px;
+            width: 100%;
+            color: #fff;
+            background-color: #1E88E5;
+        }
+
+        #section2 {
+            padding-top: 0px;
+            height: 100px;
+            width: 100%;
+            color: #fff;
+            background-color: #673ab7;
+        }
+
+        #section3 {
+            padding-top: 0px;
+            height: 100px;
+            width: 100%;
+            color: #fff;
+            background-color: #ff9800;
+        }
+
+        #section4 {
+            padding-top: 0px;
+            height: 100px;
+            width: 100%;
+            color: #fff;
+            background-color: #00bcd4;
+        }
+
+        ul {
+            list-style: none;
+            max-height: 100px;
+            margin: 0;
+            overflow: auto;
+            padding: 0;
+            text-indent: 10px;
+        }
+
+        li {
+            line-height: 25px;
+        }
+
+        /*li:nth-child(even) {
+                background: #ccc;
+            }*/
+        * {
+            margin: 0;
+        }
+
+        #container1 {
+            height: 100%;
+            width: 100%;
+            /*border: 1px solid green;*/
+            overflow: hidden;
+        }
+
+        /*Used to hide the scrollbar*/
+        #container2 {
+            width: 110%;
+            height: 110%;
+            /*border: 1px solid blue;*/
+            overflow: auto;
+            padding-right: 15px;
+        }
+
+        /*html, body {
+            height: 99%;
+            border: 1px solid red;
+            overflow: hidden;
+        }*/
     </style>
     <script>
 function allowDrop(ev) {
@@ -62,11 +202,12 @@ function drag(ev) {
             ev.preventDefault();
              var data = ev.dataTransfer.getData("text");
             ev.target.appendChild(document.getElementById(data));
-        
-            $.get("/Values/Details/777" + data); /*, function (data) { alert(data); });*/
+
+            $.post("/Home/Post/777" + data); /*, function (data) { alert(data); });*/
 
             @*window.location = "/Values/Details/" + @Model.ElementAt(1).ID*@ @*'@Url.Action("Details", "Values", Model.ElementAt(0).ID, "http")';*@
 
+        $(document.getElementById(data)).fadeOut(500);
         }
 
         function drop1(ev) {
@@ -74,7 +215,12 @@ function drag(ev) {
             var data = ev.dataTransfer.getData("text");
             ev.target.appendChild(document.getElementById(data));
 
-            document.getElementById(data).classList.add('hidden');
+//            document.getElementById(data).style.visibility = "hidden";
+
+            $(document.getElementById(data)).fadeOut(500);
+
+
+            //document.getElementById('blueBtn').classList.add('hidden');
 
             $.get("/Values/Details/rrr" + data + "test2");/*, function (data) { alert(data); });*/
 
@@ -84,15 +230,58 @@ function drag(ev) {
 </head>
 <body>
 
+    @*container of category buttons and scrollspy list of transactions*@
+    <div class="content">
+        <div class="container border" style="height:400px; width:400px">
+            @*category buttons*@
+            <button id="blueBtn" type="button" class="spot1 btn btn-primary btn-circle btn-md" ondrop="drop1(event)" ondragover="allowDrop(event)">Misc <div class="btn-circle btn-sm btn-light spot1-sm">$25</div></button>
+            <button id="blueBtn" type="button" class="spot2 btn btn-warning btn-circle btn-md" ondrop="drop1(event)" ondragover="allowDrop(event)">Vacation $1000</button>
+            <button id="blueBtn" type="button" class="spot3 btn btn-danger btn-circle btn-md" ondrop="drop1(event)" ondragover="allowDrop(event)">Fuel $156</button>
+            <button id="blueBtn" type="button" class="spot4 btn btn-success btn-circle btn-md" ondrop="drop1(event)" ondragover="allowDrop(event)">Clothing $68</button>
+
+            @*list of transactions*@
+            <div class="center-list btn-circle btn-lg outer-border">
+                <div id="container1">
+                    <div id="container2">
+                        <ul>
+                            <li id="sect1" draggable="true" ondragstart="drag(event)">
+                                <div id="section1" class="container-fluid">
+                                    <h1>Target $4.35</h1>
+                                </div>
+                            </li>
+                            <li id="sect2"  draggable="true" ondragstart="drag(event)">
+                                <div id="section2" class="container-fluid">
+                                    <h1>Kroger Fuel $32.85</h1>
+                                </div>
+                            </li>
+                            <li id="sect3" draggable="true" ondragstart="drag(event)">
+                                <div id="section3" class="container-fluid">
+                                    <h1>Walmart $23.21</h1>
+                                </div>
+                            </li>
+                            <li id="sect4" draggable="true" ondragstart="drag(event)">
+                                <div id="section4" class="container-fluid">
+                                    <h1>Kroger $3.45</h1>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <p>Drag the IMAGE into the rectangle:</p>
 
-    <div id="div1" ondrop="drop1ww(event)" ondragover="allowDrop(event)"></div>
+    <div id="div1" ondrop="drop1(event)" ondragover="allowDrop(event)"></div>
     <br>
 
     <img id="drag1" src="..\doggie.png" draggable="true" ondragstart="drag(event)" width="246" height="205">
 
     <p>Drag a CARD into the rectangle:</p>
-  
+
     <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     <br>
 
